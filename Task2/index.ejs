@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 2</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+      }
+
+      label {
+        margin-bottom: 10px;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="tel"] {
+        margin-bottom: 20px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      button[type="submit"] {
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Task 2</h1>
+    <form
+      id="myForm"
+      action="/submit"
+      method="POST"
+      onsubmit="return validateForm()"
+    >
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+
+      <label for="confirmPassword">Confirm Password:</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        required
+      />
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required />
+
+      <label>
+        <input type="checkbox" id="termsCheckbox" required />
+        I accept the terms of service
+      </label>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      function validateForm() {
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+        const gender = document.getElementById("gender").value;
+        const phone = document.getElementById("phone").value;
+        const termsCheckbox = document.getElementById("termsCheckbox");
+
+        const passwordRegex =
+          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+]).{6,}$/;
+
+        if (username.length < 3) {
+          alert("Username must be at least 3 characters long.");
+          return false;
+        }
+
+        if (!email.includes("@")) {
+          alert("Please enter a valid email address.");
+          return false;
+        }
+
+        if (!passwordRegex.test(password)) {
+          alert(
+            "Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 6 characters long."
+          );
+          return false;
+        }
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match.");
+          return false;
+        }
+
+        if (!gender) {
+          alert("Please select a gender.");
+          return false;
+        }
+
+        if (!phone.match(/^\d{10}$/)) {
+          alert("Please enter a valid 10-digit phone number.");
+          return false;
+        }
+
+        if (!termsCheckbox.checked) {
+          alert("Please accept the terms of service.");
+          return false;
+        }
+
+        return true;
+      }
+    </script>
+  </body>
+</html>
